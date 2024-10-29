@@ -17,6 +17,7 @@ model User {
 	phone String
 	password String
 	role UserRole @default(USER)
+	verified DateTime?
 
 	provider   String?
 	providerId String?
@@ -35,20 +36,37 @@ model Category {
 
 	name String @unique
 
-	categoryTypes CategoryType[]
 	products Product[]
+
+	subCategories SubCategory[]
 
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
 }
 
-model CategoryType {
-	id Int @id @default(autoincrement())
+model SubCategory {
+	id Int @default(autoincrement()) @unique
 
-	name String
+	name String @unique
+
+	productTypes ProductType[]
 
 	category Category @relation(fields: [categoryId], references: [id])
 	categoryId Int
+
+	createdAt DateTime @default(now())
+	updatedAt DateTime @updatedAt
+}
+
+model ProductType {
+	id Int @default(autoincrement()) @unique
+
+	name String @unique
+
+	products ProductToProductType[]
+
+	subCategory SubCategory @relation(fields: [subCategoryId], references: [id])
+	subCategoryId Int
 
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
@@ -61,12 +79,28 @@ model Product {
 	imageUrl String
 
 	variants Variant[]
+	productTypes ProductToProductType[]
 
 	category Category @relation(fields: [categoryId], references: [id])
 	categoryId Int
 
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
+}
+
+model ProductToProductType {
+	id Int @id @default(autoincrement())
+
+	product Product @relation(fields: [productId], references: [id])
+	productId Int
+
+	productType ProductType @relation(fields: [productTypeId], references: [id])
+	productTypeId Int
+
+	createdAt DateTime @default(now())
+	updatedAt DateTime @updatedAt
+
+	@@unique([productId, productTypeId])
 }
 
 model Variant {
