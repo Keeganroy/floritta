@@ -3,10 +3,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import { Container } from './container'
+import { SearchInput } from '@/components'
 import { NAV_LIST } from '@/constants'
 
 import Logo from '@/public/images/logo.svg'
-import SearchIcon from '@/public/images/search.svg'
 import CartIcon from '@/public/images/cart.svg'
 import HeartIcon from '@/public/images/heart.svg'
 import UserIcon from '@/public/images/user.svg'
@@ -32,7 +32,7 @@ export const Header: React.FC = () => {
 						</ul>
 					</nav>
 					<ul className='flex items-center gap-4'>
-						<Image src={SearchIcon} alt={'search'} />
+						<SearchInput />
 						<li>
 							<Link href={''}>
 								<Image src={HeartIcon} width={24} height={24} alt='favorites' />
