@@ -1,3 +1,4 @@
 export enum Routes {
-	SEARCH = 'search'
+	SEARCH = 'search',
+	CATEGORIES = 'categories'
 }
